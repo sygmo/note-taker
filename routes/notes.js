@@ -18,7 +18,7 @@ notes.post('/', (req, res) => {
         const newNote = {
             title,
             text,
-            note_id: uuidv4()
+            id: uuidv4()
         };
 
         // append note to database
@@ -30,13 +30,13 @@ notes.post('/', (req, res) => {
 });
 
 // DELETE route for deleting a note
-notes.delete('/:note_id', (req, res) => {
-    const noteId = req.params.note_id;
+notes.delete('/:id', (req, res) => {
+    const noteId = req.params.id;
     readFromFile('./db/db.json')
         .then((data) => JSON.parse(data))
         .then((json) => {
             // array of all notes with the given note removed
-            const result = json.filter((note) => note.note_id !== noteId);
+            const result = json.filter((note) => note.id !== noteId);
 
             // save array to database
             writeToFile('./db/db.json', result);
